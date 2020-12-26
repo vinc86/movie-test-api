@@ -1,12 +1,14 @@
-import { currentUser, register, login } from "./auth";
+import userResolvers from "./auth";
+import movieResolvers from "./movie";
 
 const resolverMap = {
   Query: {
-    currentUser,
+    ...userResolvers.Query,
+    ...movieResolvers.Query
   },
   Mutation: {
-    login,
-    register,
+    ...userResolvers.Mutations,
+    ...movieResolvers.Mutations
   },
 };
 

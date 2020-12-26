@@ -5,6 +5,8 @@ import { getUserInfo } from "./auth";
 import typeDefs from "./schema";
 import resolvers from "./resolvers";
 
+const port = 5000;
+
 const args = yargs.option("mongo-uri", {
   describe: "Mongo URI",
   default: "mongodb://localhost:27017/movies",
@@ -21,13 +23,17 @@ async function start() {
     console.log("Connected to DB.");
 
     await new ApolloServer({
+      cors:{
+        origin: "*",
+        credentials: true
+      },
       typeDefs,
       resolvers,
       context: ({ req }) => ({
         userInfo: getUserInfo(req.headers.authorization || ""),
       }),
-    }).listen(3000);
-    console.log("GraphQl API running on port 3000.");
+    }).listen(port)
+    .then( res => console.log(`GraphQl API running at: ${res.url}`))
   } catch (err) {
     console.error(err);
     process.exit(1);

@@ -6,15 +6,16 @@ const typeDef = `
 
     type Query {
         currentUser: User!
+        getAllUsers: [User!]!
     }
 
     type LoginResponse {
         token: String
-        user: User
+        id: String
     }
 
     type Mutation {
-        register(username: String!, password: String!): User!
+        register(username: String!, password: String!, confirmPassword: String!): User!
         login(username: String!, password: String!): LoginResponse!
     }    
 `;
